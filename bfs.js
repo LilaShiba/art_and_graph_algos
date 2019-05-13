@@ -2,6 +2,12 @@ var cities = [];
 var visited = {};
 var parent = {};
 
+function rando(bottom, top) {
+    return function() {
+        return Math.floor( Math.random() * ( 1 + top - bottom ) ) + bottom;
+    }
+}
+
 function setup() {
   createCanvas(800, 500);
   background(51);
@@ -10,42 +16,52 @@ function setup() {
   for (var i = 0; i < 8; i++){
       x = random(0,800);
       y = random(0,500);
-      edges = [random(i,8),random(i,8),random(i,8)]
-      cities[i] = new Node(x,y, edges);
+      edges = []
+      cities[i] = new Node(x,y,i);
     }
+  cities[0].edges = [cities[1], cities[2]]
+  cities[1].edges = [cities[0], cities[3]]
+  cities[2].edges = [cities[3], cities[2]]
+  cities[3].edges = [cities[4], cities[5]]
+  cities[4].edges = [cities[6], cities[5]]
+  cities[5].edges = [cities[7],cities[2]]
+  cities[6].edges = [cities[3],cities[7]]
+  cities[7].edges = [cities[1],cities[2]]
 
-    for (x of cities){
-      x.draw();
-      x.map_draw(cities);
-    }
+  for (x of cities){
+    x.draw();
+    x.map_draw(cities);
+  }
 }
 
+
 function draw(){
+  let end = cities[8]
   let start = cities[0]
-  var path = {}
   let queue = [cities[0]]
 
   while (queue.length > 0){
-    let parent_node = queue.pop(0);
-    for (x in parent_node.adj_list){
-      let current_weight = start.distance(x)
-      let dist = parent_node.distance(x) + current_weight
-      if (dist < cities[x] || !(x in visited)){
-        queue.push(x);
-        visited[x] = dist;
-        parent[x] = parent_node
+    var parent_node = queue.pop(0);
+    console.log(parent_node.edges)
+    fill(255,0,0)
+    ellipse(parent_node.x, parent_node.y, 8,8)
+    // explore edges
+    var edges = parent_node.edges
+    for (i = 0; i < edges.length; i++){
+      neighbor = edges[i]
+      let dist = parent_node.distance(neighbor)
+      if (neighbor.searched == false || dist < visited.neighbor){
+        queue.push(neighbor)
+        neighbor.searched = true
+        visited.neighbor = dist
+        stroke(255,0,0);
+        strokeWeight(5);
+        noFill()
+        beginShape();
+        line(parent_node.x, parent_node.y, neighbor.x, neighbor.y);
+        endShape();
       }
 
     }
   }
-  for (x in parent){
-    console.log(x)
-
-  }
-  // stroke(255,0,255);
-  // strokeWeight(1);
-  // noFill()
-  // beginShape();
-  // line(line_parent.x, line_parent.y, line_child.x, line_child.y);
-  // endShape();
 }

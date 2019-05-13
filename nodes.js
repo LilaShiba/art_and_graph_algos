@@ -1,7 +1,10 @@
-function Node(p1,p2,edges){
+function Node(p1,p2,name){
   this.x = p1;
   this.y = p2;
-  this.adj_list = edges
+  this.edges = []
+  this.name = name
+  this.searched = false
+  this.parent = null
 
   this.distance = function(other){
     var d = dist(this.x, this.y, other.x, other.y);
@@ -16,7 +19,7 @@ function Node(p1,p2,edges){
   }
 
   this.map_draw = function(cities){
-    for (x in this.adj_list){
+    for (x in this.edges){
       x = cities[x]
       stroke(0,255,255);
       strokeWeight(2);
