@@ -30,5 +30,14 @@ function Node(p1,p2,name){
     }
 
   }
+  this.map_draw_p = function(){
+      edge = this.parent
+      stroke(255,0,0);
+      strokeWeight(2);
+      noFill()
+      beginShape();
+      line(this.x, this.y, edge.x, edge.y);
+      endShape();
+  }
 
 }

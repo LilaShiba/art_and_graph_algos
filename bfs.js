@@ -21,7 +21,7 @@ function setup() {
     }
   cities[0].edges = [cities[1], cities[2]]
   cities[1].edges = [cities[0], cities[3]]
-  cities[2].edges = [cities[3], cities[2]]
+  cities[2].edges = [cities[3], cities[0]]
   cities[3].edges = [cities[4], cities[5]]
   cities[4].edges = [cities[6], cities[5]]
   cities[5].edges = [cities[7],cities[2]]
@@ -54,14 +54,18 @@ function draw(){
         queue.push(neighbor)
         neighbor.searched = true
         visited.neighbor = dist
-        stroke(255,0,0);
-        strokeWeight(5);
-        noFill()
-        beginShape();
-        line(parent_node.x, parent_node.y, neighbor.x, neighbor.y);
-        endShape();
+        parent.x = parent_node
+        neighbor.parent = parent_node
+        // stroke(255,0,0);
+        // strokeWeight(2);
+        // noFill()
+        // beginShape();
+        // line(parent_node.x, parent_node.y, neighbor.x, neighbor.y);
+        // endShape();
       }
-
     }
+  }
+  for (x of cities){
+    x.map_draw_p();
   }
 }
