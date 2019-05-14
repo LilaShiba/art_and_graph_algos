@@ -4,7 +4,8 @@ function Node(p1,p2,name){
   this.edges = []
   this.name = name
   this.searched = false
-  this.parent = null
+  this.parent = 0
+  this.dist = 1000000
 
   this.distance = function(other){
     var d = dist(this.x, this.y, other.x, other.y);
