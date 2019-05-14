@@ -39,11 +39,8 @@ function bfs(maze,start,end){
         if ( 0 <= cx && cx < 10 && 0 <= cy && cy < 10){
           //let weight = dist(cx,cy,x,y)
           //console.log(cx)
-
-          visited[(cx,cy)] = [cx,cy]
+          visited[[cx,cy]] = [cx,cy]
           queue.push( [cx,cy] )
-
-
         }
       }
     }
